@@ -5,9 +5,11 @@ from econagents_ibex_tudelft.config_parser.ibex_tudelft import (
     run_experiment_from_yaml,
 )
 from econagents_ibex_tudelft.core.state.market import MarketState
+from econagents_ibex_tudelft.core.state.chat import ChatState
 
 __all__ = [
     "IbexTudelftConfigParser",
     "run_experiment_from_yaml",
+    "ChatState",
     "MarketState",
 ]
