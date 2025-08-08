@@ -1,10 +1,11 @@
 # econagents IBEX-TUDelft Extension
 
-This package provides IBEX-TUDelft specific functionality for the `econagents` framework, including an agent-side market state management and specialized configuration parsers.
+This package provides IBEX-TUDelft specific functionality for the `econagents` framework, including agent-side market and chat state management and specialized configuration parsers.
 
 ## Features
 
 - **MarketState**: Order book management with support for orders and trades
+- **ChatState**: Chat state managed directly per agent.
 - **IbexTudelftConfigParser**: Extended configuration parser with:
   - Role assignment functionality (assign-name, assign-role events)
   - Market event handlers (add-order, update-order, delete-order, contract-fulfilled)
