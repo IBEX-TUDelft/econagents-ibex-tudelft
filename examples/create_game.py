@@ -11,10 +11,40 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-HOSTNAME = os.getenv("HOSTNAME")
+HOSTNAME = os.getenv("HOSTNAME", "localhost")
+API_PORT = os.getenv("API_PORT", "3089")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def join_game(game_id: str, player_number: int | None = None) -> dict[str, Any]:
+    """
+    Claim a player slot in a running game via the game engine REST API.
+
+    Sends POST /games/{game_id}/join and returns the token and player metadata
+    needed to open a WebSocket connection. Reads HOSTNAME and API_PORT from
+    the environment.
+
+    Args:
+        game_id: ID of the running game to join.
+        player_number: Optional specific slot to request.
+
+    Returns:
+        Dict with keys: token, playerNumber, role, tag.
+    """
+    url = f"http://{HOSTNAME}:{API_PORT}/games/{game_id}/join"
+    body: dict[str, Any] = {}
+    if player_number is not None:
+        body["playerNumber"] = player_number
+
+    logger.info(f"Joining game {game_id} at {url}")
+    response = requests.post(url, json=body, headers={"Content-Type": "application/json"}, timeout=10)
+    response.raise_for_status()
+
+    data = response.json()
+    logger.info(f"Joined as player {data['playerNumber']} (role={data['role']}, tag={data.get('tag')})")
+    return data
 
 
 def calculate_total_agents(game_params: dict[str, Any]) -> int:
