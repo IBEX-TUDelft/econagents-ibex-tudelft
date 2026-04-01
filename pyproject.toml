@@ -14,7 +14,7 @@ readme = "README.md"
 homepage = "https://github.com/IBEX-TUDelft/econagents"
 repository = "https://github.com/IBEX-TUDelft/econagents"
 dynamic = ["version"]
-requires-python = ">=3.10,<4"
+requires-python = ">=3.9,<4"
 dependencies = [
     "econagents[all]>=0.0.0",
     "python-dotenv>=1.0.0",
