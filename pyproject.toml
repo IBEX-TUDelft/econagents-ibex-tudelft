@@ -22,7 +22,7 @@ dependencies = [
 [tool.poetry]
 name = "econagents-ibex-tudelft"
 version = "0.0.0"  # Do not change, let poetry-dynamic-versioning handle it.
-packages = [{include = "econagents_ibex_tudelft"}]
+packages = [{include = "econagents_ibex_tudelft"}, {include = "examples"}]
 include = ["econagents_ibex_tudelft/*.so", "econagents_ibex_tudelft/*.pyd"]  # Compiled extensions
 license = "MIT"
 description = ""
