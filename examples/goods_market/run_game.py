@@ -18,7 +18,6 @@ import argparse
 import asyncio
 import logging
 import os
-from typing import Optional
 
 from dotenv import load_dotenv
 
@@ -32,7 +31,7 @@ HOSTNAME = os.getenv("HOSTNAME", "localhost")
 WS_PORT = os.getenv("WS_PORT", "3088")
 
 
-async def run_agent(game_id: str, player_number: Optional[int], personality: Optional[str], log_level: int) -> None:
+async def run_agent(game_id: str, player_number: int | None, personality: str | None, log_level: int) -> None:
     slot = join_game(game_id, player_number=player_number)
     confirmed_number: int = slot["playerNumber"]
 

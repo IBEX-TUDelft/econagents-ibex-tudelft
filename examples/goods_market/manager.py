@@ -30,7 +30,7 @@ class GoodsMarketAuth(AuthenticationMechanism):
 
 
 class GoodsMarketManager(HybridPhaseManager):
-    def __init__(self, game_id: str, player_number: int, token: str, personality: Optional[str] = None):
+    def __init__(self, game_id: str, player_number: int, token: str, personality: str | None = None):
         super().__init__(
             state=GMGameState(game_id=game_id, player_number=player_number),
             agent_role=Trader(personality=personality),

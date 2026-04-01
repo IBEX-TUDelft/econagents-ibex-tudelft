@@ -3,7 +3,7 @@ import logging
 import os
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import requests
 from dotenv import load_dotenv
@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def join_game(game_id: str, player_number: Optional[int] = None) -> dict[str, Any]:
+def join_game(game_id: str, player_number: int | None = None) -> dict[str, Any]:
     """
     Claim a player slot in a running game via the game engine REST API.
 
