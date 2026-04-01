@@ -9,10 +9,11 @@ import requests
 from dotenv import load_dotenv
 
 
-load_dotenv()
+load_dotenv(override=True)
 
 HOSTNAME = os.getenv("HOSTNAME", "localhost")
 API_PORT = os.getenv("API_PORT", "3089")
+API_BASE_URL = f"http://{HOSTNAME}:{API_PORT}"
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -33,7 +34,7 @@ def join_game(game_id: str, player_number: int | None = None) -> dict[str, Any]:
     Returns:
         Dict with keys: token, playerNumber, role, tag.
     """
-    url = f"http://{HOSTNAME}:{API_PORT}/games/{game_id}/join"
+    url = f"{API_BASE_URL}/games/{game_id}/join"
     body: dict[str, Any] = {}
     if player_number is not None:
         body["playerNumber"] = player_number

@@ -1,0 +1,74 @@
+## Current situation (round {{ meta.round }})
+
+**Your holdings**
+- Cash:   {{ "%.2f"|format(private_information.cash) }}
+- Shares: {{ private_information.shares }}
+
+**Value signals**
+{% if private_information.private_signal is not none %}
+- Private signal: {{ "%.2f"|format(private_information.private_signal) }}  ← use this as your primary value estimate (V)
+{% else %}
+- Private signal: not available
+{% endif %}
+{% if public_information.public_signal is not none %}
+- Public signal:  {{ "%.2f"|format(public_information.public_signal) }}  (visible to all players)
+{% else %}
+- Public signal:  not available
+{% endif %}
+{% if public_information.recent_prices %}
+- Recent trade prices (oldest → newest): {{ public_information.recent_prices | join(", ") }}
+- Market median (last 7):                {{ "%.2f"|format(public_information.current_share_value) }}
+{% if private_information.private_signal is none %}  ← use this as V (no private signal available){% endif %}
+{% else %}
+- No trades have occurred yet this round — treat V as uncertain and widen your margins.
+{% endif %}
+{% if private_information.private_signal is not none and public_information.recent_prices %}
+
+- Divergence private vs market: {{ "%.2f"|format(private_information.private_signal - public_information.current_share_value) }}
+  (positive = market is underpricing shares relative to your signal)
+{% endif %}
+
+**Order book**
+{% set my_bids = public_information.orders.values() | selectattr("type", "equalto", "bid") | selectattr("sender", "equalto", meta.player_number) | list %}
+{% set my_asks = public_information.orders.values() | selectattr("type", "equalto", "ask") | selectattr("sender", "equalto", meta.player_number) | list %}
+{% set other_bids = public_information.orders.values() | selectattr("type", "equalto", "bid") | rejectattr("sender", "equalto", meta.player_number) | sort(attribute="price", reverse=True) | list %}
+{% set other_asks = public_information.orders.values() | selectattr("type", "equalto", "ask") | rejectattr("sender", "equalto", meta.player_number) | sort(attribute="price") | list %}
+
+Your standing orders:
+{% if my_bids or my_asks %}
+{% for o in my_bids %}- bid  id={{ o.id }}  price={{ o.price }}
+{% endfor %}
+{% for o in my_asks %}- ask  id={{ o.id }}  price={{ o.price }}
+{% endfor %}
+{% else %}
+  (none)
+{% endif %}
+
+Other players' asks (lowest first — potential buys):
+{% if other_asks %}
+{% for o in other_asks %}- ask  id={{ o.id }}  price={{ o.price }}  sender={{ o.sender }}
+{% endfor %}
+{% else %}
+  (none)
+{% endif %}
+
+Other players' bids (highest first — potential sells):
+{% if other_bids %}
+{% for o in other_bids %}- bid  id={{ o.id }}  price={{ o.price }}  sender={{ o.sender }}
+{% endfor %}
+{% else %}
+  (none)
+{% endif %}
+
+## Your decision
+Follow the steps in your instructions. Respond with a single JSON object — no prose, no markdown.
+
+Post a limit order:
+{"action": "post-order", "type": "bid", "price": 980, "now": false}
+{"action": "post-order", "type": "ask", "price": 1020, "now": false}
+
+Cancel a standing order:
+{"action": "cancel-order", "order_id": 42}
+
+Do nothing:
+{"action": "none"}

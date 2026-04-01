@@ -1,0 +1,61 @@
+## Current situation (round {{ meta.round }})
+
+**Your holdings**
+- Cash:   {{ "%.2f"|format(private_information.cash) }}
+- Shares: {{ private_information.shares }}
+- Estimated portfolio value: {{ "%.2f"|format(private_information.cash + private_information.shares * public_information.current_share_value) }}
+
+**Market prices**
+{% if public_information.recent_prices %}
+- Recent trade prices (oldest → newest): {{ public_information.recent_prices | join(", ") }}
+- Estimated share value (median of last 7): {{ "%.2f"|format(public_information.current_share_value) }}
+{% else %}
+- No trades have occurred yet this round.
+- Estimated share value: unknown
+{% endif %}
+
+**Order book**
+{% set bids = public_information.orders.values() | selectattr("type", "equalto", "bid") | sort(attribute="price", reverse=True) | list %}
+{% set asks = public_information.orders.values() | selectattr("type", "equalto", "ask") | sort(attribute="price") | list %}
+{% if asks %}
+Asks (lowest first):
+{% for o in asks %}
+  - id={{ o.id }}  price={{ o.price }}  sender={{ o.sender }}{% if o.sender == meta.player_number %} ← yours{% endif %}
+
+{% endfor %}
+{% else %}
+  (no asks)
+{% endif %}
+{% if bids %}
+Bids (highest first):
+{% for o in bids %}
+  - id={{ o.id }}  price={{ o.price }}  sender={{ o.sender }}{% if o.sender == meta.player_number %} ← yours{% endif %}
+
+{% endfor %}
+{% else %}
+  (no bids)
+{% endif %}
+
+## Your decision
+Decide on one action and respond with a single JSON object — no prose, no markdown, just the JSON.
+
+**Post a limit order:**
+```json
+{"action": "post-order", "type": "bid", "price": 980, "now": false}
+{"action": "post-order", "type": "ask", "price": 1020, "now": false}
+```
+
+**Post a market order (executes immediately or is refused):**
+```json
+{"action": "post-order", "type": "bid", "price": 0, "now": true}
+```
+
+**Cancel one of your standing orders:**
+```json
+{"action": "cancel-order", "order_id": 42}
+```
+
+**Do nothing:**
+```json
+{"action": "none"}
+```
