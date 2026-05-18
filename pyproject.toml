@@ -16,7 +16,7 @@ repository = "https://github.com/IBEX-TUDelft/econagents"
 dynamic = ["version"]
 requires-python = ">=3.10,<4"
 dependencies = [
-    "econagents[all]>=0.0.0",
+    "econagents[all]>=0.1.2",
 ]
 
 [tool.poetry]

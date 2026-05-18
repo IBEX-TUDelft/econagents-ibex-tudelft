@@ -722,44 +722,33 @@ files = [
 
 [[package]]
 name = "econagents"
-version = "0.0.8"
-description = ""
+version = "0.1.2"
+description = "A Python library that lets you use LLM agents in economic experiments."
 optional = false
 python-versions = "<4,>=3.10"
 groups = ["main"]
 files = [
-    {file = "econagents-0.0.8-py3-none-any.whl", hash = "sha256:a5f3db062964da0aefa8148518748732204c20bd66459cc53c3e37640e50ef13"},
-    {file = "econagents-0.0.8.tar.gz", hash = "sha256:c01c4f70ef1abe9d13ade38dee23573b1845a982b4fdf63a029526a49954f8d0"},
+    {file = "econagents-0.1.2-py3-none-any.whl", hash = "sha256:0f8d64ece6c1d93fec8c85e7b5dc09af46386fdc591d6306cb2b6a059c5493b4"},
+    {file = "econagents-0.1.2.tar.gz", hash = "sha256:f3fbbbbf62c61ddfd116bd14b813090103ba153dd48a3798f2dfefcc69518209"},
 ]
 
 [package.dependencies]
-langfuse = [
-    {version = ">=3.0.3"},
-    {version = ">=3.0.3", optional = true, markers = "extra == \"all\""},
-]
-langsmith = [
-    {version = ">=0.4.1"},
-    {version = ">=0.4.1", optional = true, markers = "extra == \"all\""},
-]
-ollama = [
-    {version = ">=0.5.1"},
-    {version = ">=0.5.1", optional = true, markers = "extra == \"all\""},
-]
-openai = [
-    {version = ">=1.89.0"},
-    {version = ">=1.89.0", optional = true, markers = "extra == \"all\""},
-]
+jinja2 = ">=3.1"
+langfuse = {version = ">=3.0.3", optional = true, markers = "extra == \"all\""}
+langsmith = {version = ">=0.4.1", optional = true, markers = "extra == \"all\""}
+ollama = {version = ">=0.5.1", optional = true, markers = "extra == \"all\""}
+openai = ">=1.89.0"
 pydantic = ">=2.11.5"
+pyyaml = ">=6.0"
 requests = ">=2.32.4"
 websockets = ">=15.0"
 
 [package.extras]
-all = ["langfuse", "langsmith", "ollama", "openai"]
-langfuse = ["langfuse"]
-langsmith = ["langsmith"]
-ollama = ["ollama"]
-openai = ["openai"]
-standard = ["langsmith", "openai"]
+all = ["langfuse (>=3.0.3)", "langsmith (>=0.4.1)", "ollama (>=0.5.1)"]
+langfuse = ["langfuse (>=3.0.3)"]
+langsmith = ["langsmith (>=0.4.1)"]
+ollama = ["ollama (>=0.5.1)"]
+standard = ["langsmith (>=0.4.1)"]
 
 [[package]]
 name = "exceptiongroup"
@@ -1249,7 +1238,7 @@ version = "3.1.6"
 description = "A very fast and expressive template engine."
 optional = false
 python-versions = ">=3.7"
-groups = ["dev"]
+groups = ["main", "dev"]
 files = [
     {file = "jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67"},
     {file = "jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d"},
@@ -1845,7 +1834,7 @@ version = "3.0.2"
 description = "Safely add untrusted strings to HTML/XML markup."
 optional = false
 python-versions = ">=3.9"
-groups = ["dev"]
+groups = ["main", "dev"]
 files = [
     {file = "MarkupSafe-3.0.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:7e94c425039cde14257288fd61dcfb01963e658efbc0ff54f5306b06054700f8"},
     {file = "MarkupSafe-3.0.2-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:9e2d922824181480953426608b81967de705c3cef4d1af983af849d7bd619158"},
@@ -2932,7 +2921,7 @@ version = "6.0.2"
 description = "YAML parser and emitter for Python"
 optional = false
 python-versions = ">=3.8"
-groups = ["dev"]
+groups = ["main", "dev"]
 files = [
     {file = "PyYAML-6.0.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:0a9a2848a5b7feac301353437eb7d5957887edbf81d56e903999a75a3d743086"},
     {file = "PyYAML-6.0.2-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:29717114e51c84ddfba879543fb232a6ed60086602313ca38cce623c1d62cfbf"},
@@ -4104,4 +4093,4 @@ cffi = ["cffi (>=1.11)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<4"
-content-hash = "a9e94f2f4a9a5567294feb9092975edc0668aff2d12da1581b01c85dbe720637"
+content-hash = "1862a94ccd744fce5412f2bdd665bb530408d50fbb3a05c799f80dfb3b1a4374"
